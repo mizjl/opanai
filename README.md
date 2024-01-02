@@ -13,41 +13,36 @@ npm i china-openai
 ### 导入所需的模块
 
 ```javascript
-import { apikey, imagesGenerate, chatCompletions } from "china-openai";
+const { imagesGenerate, chatCompletions } = require('china-openai')
 ```
 ### 使用
 
 ```javascript
-// 导入所需的模块
-import { apikey, imagesGenerate, chatCompletions } from "./yourModule";
-
 // 调用函数示例  apiKey 需要openai官网去申请 
 const apiKey = "YOUR_API_KEY"; // 替换为你的实际 API 密钥
 
-// 创建 OpenAI 实例还有个参数isAgent 是否开启代理 默认为false
-const aiHelper = apikey({ apiKey: apiKey });
-
-// const aiHelper = apikey({ apiKey: apiKey,isAgent:true });
-
 // 聊天完成示例
 const chatCompletion = async () => {
-    try {
-        const model = "your_model_name"; // 替换为你的模型名称
-        const messages = [
-            { role: "system", content: "You are a helpful assistant." },
-            { role: "user", content: "Hello" }
-        ];
+try {  
+    const model = "gpt-3.5-turbo";
+    const messages = [
+      { role: "system", content: "You are a helpful assistant." },
+      { role: "user", content: "Who won the World Series in 2021?" }
+    ];
 
-        const response = await chatCompletions({
-            model: model,
-            messages: messages,
-            stream: false, //需要流传输改为true
-        });
+    const response = await chatCompletions({
+      model: model,
+      messages: messages,
+      stream: false,
+      config:{ apiKey: apiKey, isAgent: true } // 建议本地调试isAgent: true
+    });
 
-        console.log(response);
-    } catch (err) {
-        console.error(err);
-    }
+    res.send({
+      data: response
+    });
+  } catch (err) {
+    throw err;
+  }
 };
 
 chatCompletion();
@@ -57,7 +52,7 @@ const generateImages = async () => {
     try {
         const model = "your_model_name"; // 替换为你的模型名称
         const prompt = "your_prompt_text"; // 替换为你的提示文本
-        const n = 1; // 生成的图像数量
+        const n = 1; // 生成的图像数量 最多为10
 
         const images = await imagesGenerate({
             model: model,

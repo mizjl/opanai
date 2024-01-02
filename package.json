@@ -1,6 +1,6 @@
 {
   "name": "china-openai",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "适合国内开发者的openai库",
   "keywords": ["openia", "ChatGPT", "Ai"],
   "main": "index.js",
